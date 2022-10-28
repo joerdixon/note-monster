@@ -10,7 +10,7 @@ The website is hosted by Heroku.
 
 ## Installation
 
-No installation, the website is being hosted by Heroku just click this [link]()
+No installation, the website is being hosted by Heroku just click this [link](https://note-monster.herokuapp.com/notes)
 
 ## Usage
 
