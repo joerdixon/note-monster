@@ -76,6 +76,26 @@ app.post("/api/notes", (req, res) => {
     })
 })
 
+// Attempted Delete Path.
+// app.delete("/api/notes/:id", (req, res) => {
+//     fs.readFile("./db/db.json", "utf-8", (err, data) => {
+//         if (err) {
+//             res.status(400).json({
+//                 msg: "something went wrong",
+//                 err: err
+//             })
+//         } else {
+//             const notes = JSON.parse(data);
+//             notes.forEach(note => {
+//                 let noteLoc = notes.findIndex(note);
+//                 if (req.params.id === note.id) {
+//                     notes.splice(noteLoc, 1);
+//                 }
+//             })
+//         }
+//     })
+// })
+
 // Turns on the port.
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
