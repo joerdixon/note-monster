@@ -3,23 +3,20 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
-// const uuid = require("uuid");
-
 // Non Package Requirements
 const database = require("./db/db.json")
-
 // Initialize Server
 const app = express();
-
 // Server port
 const PORT = process.env.PORT || 3000;
 
 // Static middleware telling all file paths to start from this directory
 app.use(express.static("public"));
-
 // Middleware allowing the express server to parse incoming data.
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+// ROUTES ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // Serves the landing page
 app.get("/", (req, res) => {
@@ -76,25 +73,32 @@ app.post("/api/notes", (req, res) => {
     })
 })
 
-// Attempted Delete Path.
-// app.delete("/api/notes/:id", (req, res) => {
-//     fs.readFile("./db/db.json", "utf-8", (err, data) => {
-//         if (err) {
-//             res.status(400).json({
-//                 msg: "something went wrong",
-//                 err: err
-//             })
-//         } else {
-//             const notes = JSON.parse(data);
-//             notes.forEach(note => {
-//                 let noteLoc = notes.findIndex(note);
-//                 if (req.params.id === note.id) {
-//                     notes.splice(noteLoc, 1);
-//                 }
-//             })
-//         }
-//     })
-// })
+// Delete Path
+app.delete("/api/notes/:id", (req, res) => {
+    fs.readFile("./db/db.json", "utf-8", (err, data) => {
+        if (err) {
+            res.status(400).json({
+                msg: "something went wrong",
+                err: err
+            })
+        } else {
+            const notes = JSON.parse(data);
+            notes.forEach(note => {
+                let noteLoc = notes.indexOf(note);
+                if (req.params.id === note.id) {
+                    notes.splice(noteLoc, 1);
+                }
+            })
+            fs.writeFile("./db/db.json", JSON.stringify(notes), (err, data) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    res.send("Success!!!")
+                }
+            })
+        }
+    })
+})
 
 // Turns on the port.
 app.listen(PORT, () => {

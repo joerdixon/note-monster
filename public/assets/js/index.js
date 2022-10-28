@@ -1,4 +1,3 @@
-// const uuid = require("uuid");
 let noteTitle;
 let noteText;
 let saveNoteBtn;
@@ -41,14 +40,14 @@ const saveNote = (note) =>
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(note)
-  })
+  });
   
 const deleteNote = (id) =>
   fetch(`/api/notes/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
-    },
+    }
   });
 
 const renderActiveNote = () => {
@@ -71,7 +70,6 @@ const handleNoteSave = () => {
   const newNote = {
     title: noteTitle.value,
     text: noteText.value,
-    // id: uuid.v4([options.random])
   };
   saveNote(newNote).then(() => {
     getAndRenderNotes();
