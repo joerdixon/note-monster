@@ -31,7 +31,15 @@ app.get("/notes", (req, res) => {
 
 // Serves all notes in json format.
 app.get("/api/notes", (req, res) => {
-    res.json(database)
+    // Read in current state of the db
+    fs.readFile("./db/db.json", "utf-8", (err, data) => {
+        if (err) {
+            console.log(err)
+        } else {
+            // Respond with json containing all notes.
+            res.json(JSON.parse(data))
+        }
+    })
 })
 
 // When a post request is made to api/notes
@@ -75,20 +83,27 @@ app.post("/api/notes", (req, res) => {
 
 // Delete Path
 app.delete("/api/notes/:id", (req, res) => {
-    fs.readFile("./db/db.json", "utf-8", (err, data) => {
+    // Read in the current state of the file as json.
+    fs.readFile("./db/db.json", "utf8", (err, data) => {
         if (err) {
+            // Error Catch
             res.status(400).json({
                 msg: "something went wrong",
                 err: err
             })
         } else {
+            // Parse json into object array and store in notes variable.
             const notes = JSON.parse(data);
             notes.forEach(note => {
+                // Set noteLoc to the index of the current object.
                 let noteLoc = notes.indexOf(note);
+                // If the object id matches the request param
                 if (req.params.id === note.id) {
+                    // Remove that object from the array
                     notes.splice(noteLoc, 1);
                 }
             })
+            // Rewrite the file sans deleted object.
             fs.writeFile("./db/db.json", JSON.stringify(notes), (err, data) => {
                 if (err) {
                     console.log(err)

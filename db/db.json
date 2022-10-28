@@ -1,12 +1,7 @@
 [
     {
-        "title": "fsd",
-        "text": "fdfd",
-        "id": "e8875ba8-0a4c-41bb-a804-4d7aa75860a6"
-    },
-    {
-        "title": "fdfs",
-        "text": "fsdf",
-        "id": "1dc31046-da64-4f1d-b59b-9eac2ffba1d3"
+        "title": "Sample Note",
+        "text": "These are the contents of this note.",
+        "id": "a7001f00-ce62-489b-bd76-6ff6a0ec9d9a"
     }
 ]
